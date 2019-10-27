@@ -13,6 +13,8 @@ then
   echo "export STEAM_SERVER_TOKEN=your-token"
   echo "./call-this-script"
   exit 1
+else
+  echo "STEAM_SERVER_TOKEN: ${STEAM_SERVER_TOKEN}"
 fi
 
 
