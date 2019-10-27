@@ -26,16 +26,14 @@ fi
 apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificates
 
 useradd -m steam
-mkdir /csgo
-chown steam:steam /csgo
+mkdir ${CSGO_DIR}
+chown steam:steam ${CSGO_DIR}
 sudo su - steam
 mkdir ~/Steam && cd ~/Steam
 
 #echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
 echo "export STEAM_SERVER_TOKEN='${STEAM_SERVER_TOKEN}'" >> ~/.profile
 #echo "export SERVER_PASSWORD='${SERVER_PASSWORD}'" >> ~/.profile
-
-echo ""csgo/cfg/server.cfg
 
 cat << SERVERCFG > $CSGO_DIR/csgo/cfg/server.cfg
 hostname "${SERVER_NAME}"
