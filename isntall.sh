@@ -1,8 +1,10 @@
 #!/bin/bash
 
 REPO_BASE=
+CSGO_DIR=/csgo
 
 echo "This will install CS:GO Dedicated Server"
+SERVER_NAME=${SERVER_NAME:-Default Server (change in boot script)}
 
 if [ -z "${STEAM_SERVER_TOKEN}" ]
 then
@@ -29,8 +31,20 @@ chown steam:steam /csgo
 sudo su - steam
 mkdir ~/Steam && cd ~/Steam
 
-echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
+#echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
 echo "export STEAM_SERVER_TOKEN='${STEAM_SERVER_TOKEN}'" >> ~/.profile
+#echo "export SERVER_PASSWORD='${SERVER_PASSWORD}'" >> ~/.profile
+
+echo ""csgo/cfg/server.cfg
+
+cat << SERVERCFG > $CSGO_DIR/csgo/cfg/server.cfg
+hostname "${SERVER_NAME}"
+rcon_password "${RCON_PASSWORD}"
+sv_password "${SERVER_PASSWORD}"
+sv_lan 0
+sv_cheats 0
+SERVERCFG
+
 
 
 curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
