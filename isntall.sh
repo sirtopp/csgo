@@ -28,19 +28,18 @@ apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificate
 echo "Creating user: ${CS_USER}"
 useradd -m steam
 mkdir -p ${CS_DIR}
-chown steam:steam ${CS_DIR}
-sudo su - steam
-mkdir ~/Steam && cd ~/Steam
-
-curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
-./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
-
+chown ${CS_USER}:${CS_USER} ${CS_DIR}
+sudo -u ${CS_USER} -i <<USERSCRIPT
+	mkdir ~/Steam && cd ~/Steam
+	curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
+	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
+USERSCRIPT
 
 #echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
 #echo "export STEAM_SERVER_TOKEN='${STEAM_SERVER_TOKEN}'" >> ~/.profile
 #echo "export SERVER_PASSWORD='${SERVER_PASSWORD}'" >> ~/.profile
 
-cat << END_OF_CFG > ${CS_DIR}/cfg/server.cfg
+cat << END_OF_CFG > "${CS_DIR}/csgo/cfg/server.cfg"
 hostname "${SERVER_NAME}"
 rcon_password "${RCON_PASSWORD}"
 sv_password "${SERVER_PASSWORD}"
@@ -48,3 +47,7 @@ sv_setsteamaccount "${STEAM_SERVER_TOKEN}"
 sv_lan 0
 sv_cheats 0
 END_OF_CFG
+
+echo "    > Updating DNS (${SERVER_DOMAIN})..."
+
+curl -s "https://www.duckdns.org/update?domains=${SERVER_DOMAIN}&token=${DUCKDNS_KEY}"
