@@ -8,6 +8,7 @@ You can automate installation process by using simple server installation script
 ```
 #!/bin/sh
 
+SERVER_NAME="Your server name"
 export STEAM_SERVER_TOKEN="....."
 export RCONN_PASSWORD="your-rcon-password"
 export SERVER_PASSWORD="your-server-password"
