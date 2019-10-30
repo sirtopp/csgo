@@ -1,7 +1,6 @@
 #!/bin/bash
 
 DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master"
-INSTALL_DIR="~/csgo-ds"
 PACKAGE_URL="https://github.com/sirtopp/csgo/archive/master.zip"
 CS_DIR=/csgo
 CS_USER=steam
@@ -25,9 +24,8 @@ fi
 
 apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificates unzip
 
-mkdir -p ${INSTALL_DIR}
-cd ${INSTALL_DIR}
 curl -Lo master.zip ${PACKAGE_URL}
+unzip master.zip
 
 
 echo "Creating user: ${CS_USER}"
@@ -45,12 +43,8 @@ sudo -u steam -i <<USERSCRIPT
 	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
 USERSCRIPT
 
-#echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
-#echo "export STEAM_SERVER_TOKEN='${STEAM_SERVER_TOKEN}'" >> ~/.profile
-#echo "export SERVER_PASSWORD='${SERVER_PASSWORD}'" >> ~/.profile
-
-curl -Lo "${CS_DIR}/csgo/cfg/server.cfg" "${DOWNLOAD_BASE_URL}/cfg/server.cfg"
-curl -Lo "${CS_DIR}/csgo/cfg/autoexec.cfg" "${DOWNLOAD_BASE_URL}/cfg/autoexec.cfg"
+mv  "csgo-master/cfg/server.cfg" "${CS_DIR}/csgo/cfg/server.cfg"
+mv  "csgo-master/cfg/autoexec.cfg" "${CS_DIR}/csgo/cfg/autoexec.cfg"
 chown ${CS_USER}:${CS_USER} "${CS_DIR}/csgo/cfg"
 
 cat << AUTOEXEC_CFG >> "${CS_DIR}/csgo/cfg/autoexec.cfg"
@@ -61,4 +55,5 @@ sv_password "${SERVER_PASSWORD}"
 sv_setsteamaccount "${STEAM_SERVER_TOKEN}"
 AUTOEXEC_CFG
 
+cd csgo-master
 source ./post-install.sh
