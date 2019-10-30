@@ -1,6 +1,8 @@
 #!/bin/bash
 
-REPO_BASE=
+PACKAGE_URL="https://github.com/sirtopp/csgo/archive/master.zip"
+DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master/"
+INSTALL_DIR=~/csgo
 CS_DIR=/csgo
 CS_USER=steam
 
@@ -20,8 +22,11 @@ else
   echo "STEAM_SERVER_TOKEN: ${STEAM_SERVER_TOKEN}"
 fi
 
+mkdir -p ${INSTALL_DIR}
+curl -Lo
 
 
+exit 0
 
 
 apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificates
