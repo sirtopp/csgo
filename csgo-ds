@@ -1,0 +1,26 @@
+#!/bin/bash
+
+CS_DIR=/csgo
+DAEMON="/csgo/srcds_run"
+PIDFILE=/var/run/srcds_run.pid
+ARGS="-pidfile ${PIDFILE}"
+ARGS=""
+
+case $1 in
+        start)
+        start-stop-daemon --start --quiet --oknodo \
+                --chuid steam:steam \
+                --pidfile $PIDFILE \
+                --make-pidfile \
+                --chdir ${CS_DIR} \
+                --background \
+                --exec $DAEMON -- $ARGS
+        ;;
+
+        stop)
+        start-stop-daemon --stop --quiet --oknodo \
+                --ppid $(cat $PIDFILE) \
+                --signal INT
+        ;;
+
+esac
