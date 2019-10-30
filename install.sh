@@ -38,11 +38,6 @@ sudo -u ${CS_USER} -i <<USERSCRIPT
 	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
 USERSCRIPT
 
-sudo -u steam -i <<USERSCRIPT
-	cd ~/Steam
-	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
-USERSCRIPT
-
 mv  "csgo-master/cfg/server.cfg" "${CS_DIR}/csgo/cfg/server.cfg"
 mv  "csgo-master/cfg/autoexec.cfg" "${CS_DIR}/csgo/cfg/autoexec.cfg"
 chown ${CS_USER}:${CS_USER} "${CS_DIR}/csgo/cfg"
