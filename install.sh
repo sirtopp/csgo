@@ -1,9 +1,9 @@
 #!/bin/bash
 
-PACKAGE_URL="https://github.com/sirtopp/csgo/archive/master.zip"
-DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master/"
+DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master"
 CS_DIR=/csgo
 CS_USER=steam
+SERVER_NAME=${SERVER_NAME:-'CS:GO Server'}
 
 echo "This will install CS:GO Dedicated Server"
 SERVER_NAME=${SERVER_NAME:-Default Server (change in boot script)}
@@ -33,19 +33,25 @@ sudo -u ${CS_USER} -i <<USERSCRIPT
 	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
 USERSCRIPT
 
+sudo -u steam -i <<USERSCRIPT
+	cd ~/Steam
+	./steamcmd.sh +login anonymous +force_install_dir /csgo +app_update 740 validate +quit
+USERSCRIPT
+
 #echo "export RCON_PASSWORD='${RCON_PASSWORD:-}'" >> ~/.profile
 #echo "export STEAM_SERVER_TOKEN='${STEAM_SERVER_TOKEN}'" >> ~/.profile
 #echo "export SERVER_PASSWORD='${SERVER_PASSWORD}'" >> ~/.profile
 
-cat << END_OF_CFG > "${CS_DIR}/csgo/cfg/server.cfg"
+curl -Lo "${CS_DIR}/csgo/cfg/server.cfg" "${DOWNLOAD_BASE_URL}/cfg/server.cfg"
+curl -Lo "${CS_DIR}/csgo/cfg/autoexec.cfg" "${DOWNLOAD_BASE_URL}/cfg/autoexec.cfg"
+chown ${CS_USER}:${CS_USER} "${CS_DIR}/csgo/cfg"
+
+cat << AUTOEXEC_CFG >> "${CS_DIR}/csgo/cfg/autoexec.cfg"
+
 hostname "${SERVER_NAME}"
 rcon_password "${RCON_PASSWORD}"
 sv_password "${SERVER_PASSWORD}"
 sv_setsteamaccount "${STEAM_SERVER_TOKEN}"
-sv_lan 0
-sv_cheats 0
-END_OF_CFG
+AUTOEXEC_CFG
 
-echo "    > Updating DNS (${SERVER_DOMAIN})..."
-
-curl -s "https://www.duckdns.org/update?domains=${SERVER_DOMAIN}&token=${DUCKDNS_KEY}"
+source ./post-install.sh
