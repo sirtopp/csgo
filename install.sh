@@ -1,6 +1,8 @@
 #!/bin/bash
 
 DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master"
+INSTALL_DIR="~/csgo-ds"
+PACKAGE_URL="https://github.com/sirtopp/csgo/archive/master.zip"
 CS_DIR=/csgo
 CS_USER=steam
 SERVER_NAME=${SERVER_NAME:-'CS:GO Server'}
@@ -21,8 +23,13 @@ else
   echo "STEAM_SERVER_TOKEN: ${STEAM_SERVER_TOKEN}"
 fi
 
+apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificates unzip
 
-apt-get install --no-install-recommends -y lib32gcc1 lib32stdc++6 ca-certificates
+mkdir -p ${INSTALL_DIR}
+cd ${INSTALL_DIR}
+curl -Lo master.zip ${PACKAGE_URL}
+
+
 echo "Creating user: ${CS_USER}"
 useradd -m steam
 mkdir -p ${CS_DIR}
