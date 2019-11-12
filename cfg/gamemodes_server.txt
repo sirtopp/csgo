@@ -1,0 +1,40 @@
+"GameModes_Server.txt"{
+	"gameTypes"{
+		"classic"{
+			"gameModes"{
+
+				/////////////////////////////////////////
+				// CASUAL
+				/////////////////////////////////////////
+				"casual"{
+
+
+
+								"maxplayers"            "20"
+
+								"mapgroupsMP"                                           // List of mapgroups valid for this game mode ( casual )
+								{
+										"mg_topp"            ""
+								}
+				}
+			}
+		}
+		"mapgroups"
+        {
+                "mg_topp"                                                                    // mapgroup definition
+                {
+                        "name"                  "mg_topp"
+                        "maps"
+                        {
+                                "de_dust2"           ""
+                                "de_inferno"         ""
+                                "cs_assault"           ""
+                                "cs_italy"         ""
+                                "de_lake"           ""
+								"de_shortdust"		""
+                        }
+                }
+        }
+		
+	}
+}

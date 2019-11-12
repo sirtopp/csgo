@@ -44,6 +44,8 @@ USERSCRIPT
 
 mv  "csgo-master/cfg/server.cfg" "${CS_DIR}/csgo/cfg/server.cfg"
 mv  "csgo-master/cfg/autoexec.cfg" "${CS_DIR}/csgo/cfg/autoexec.cfg"
+mv  "csgo-master/cfg/gamemode_casual_server.cfg" "${CS_DIR}/csgo/cfg/gamemode_casual_server.cfg"
+mv  "csgo-master/cfg/gamemodes_server.txt" "${CS_DIR}/csgo/gamemodes_server.txt"
 chown ${CS_USER}:${CS_USER} "${CS_DIR}/csgo/cfg"
 
 cat << AUTOEXEC_CFG >> "${CS_DIR}/csgo/cfg/autoexec.cfg"
