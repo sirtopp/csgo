@@ -4,7 +4,6 @@ DOWNLOAD_BASE_URL="https://github.com/sirtopp/csgo/raw/master"
 PACKAGE_URL="https://github.com/sirtopp/csgo/archive/master.zip"
 CS_DIR=/csgo
 CS_USER=steam
-SERVER_NAME=${SERVER_NAME:-'CS:GO Server'}
 
 echo "This will install CS:GO Dedicated Server"
 SERVER_NAME=${SERVER_NAME:-Default Server (change in boot script)}
@@ -32,6 +31,11 @@ echo "Creating user: ${CS_USER}"
 useradd -m steam
 mkdir -p ${CS_DIR}
 chown ${CS_USER}:${CS_USER} ${CS_DIR}
+
+pushd csgo-master
+source ./pre-install.sh
+popd
+
 sudo -u ${CS_USER} -i <<USERSCRIPT
 	mkdir ~/Steam && cd ~/Steam
 	curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
@@ -51,4 +55,5 @@ sv_setsteamaccount "${STEAM_SERVER_TOKEN}"
 AUTOEXEC_CFG
 
 cd csgo-master
+cp csgo-ds /etc/init.d/ && chmod +x /etc/init.d/csgo-ds
 source ./post-install.sh
