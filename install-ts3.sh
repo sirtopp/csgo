@@ -7,8 +7,7 @@ set -e
 TS3_SRC='https://files.teamspeak-services.com/releases/server/3.11.0/teamspeak3-server_linux_amd64-3.11.0.tar.bz2'
 TS3_SRC_SHA256='18c63ed4a3dc7422e677cbbc335e8cbcbb27acd569e9f2e1ce86e09642c81aa2'
 
-#TODO Put DuckDNS token in env
-curl "https://www.duckdns.org/update?domains=ferajna-ts3&token=$(cat ~/.duckdns)"
+curl "https://www.duckdns.org/update?domains=ferajna-ts3&token=${DUCKDNS_KEY}"
 
 useradd -m teamspeak
 cd /home/teamspeak
@@ -26,7 +25,7 @@ cd teamspeak3-server_linux_amd64
 touch .ts3server_license_accepted
 
 
-### TODO Copy ini file to ts3server.ini
+wget 'https://raw.githubusercontent.com/sirtopp/csgo/master/ts3server.ini'
 ./ts3server_minimal_runscript.sh inifile=ts3server.ini &
 
 
