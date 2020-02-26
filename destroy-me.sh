@@ -28,4 +28,4 @@ echo "    > Clearing server DNS..."
 curl -s "https://www.duckdns.org/update?domains=${SERVER_DOMAIN}&token=${DUCKDNS_KEY}&clear=true"
 
 
-# curl -H "API-Key: YIXFTXHFCGHUGB4J2X6N5I6FGDF7YPU5I3OQ"  "https://api.vultr.com/v1/server/list"
+# curl -H "API-Key: XXXX"  "https://api.vultr.com/v1/server/list"
